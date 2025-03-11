@@ -23,8 +23,6 @@ class PostsController < ApplicationController
 
   # POST /posts
   def create
-    puts "DEBUG PARAMS: #{params.inspect}"  # Add this line to check incoming params
-
     @post = current_user.posts.build(post_params)
     if @post.save
       redirect_to root_path, notice: "Post created successfully!"
@@ -32,7 +30,6 @@ class PostsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
 
   # PATCH/PUT /posts/1
   def update
@@ -45,24 +42,21 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1
   def destroy
-    @post.destroy!
-    redirect_to posts_path, status: :see_other, notice: "Post was successfully destroyed."
+    @post.destroy
+    redirect_to posts_path, notice: "Post was successfully deleted."
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_post
     @post = Post.find(params[:id])
   end
 
-  # Authorize user
   def authorize_user!
     redirect_to posts_path, alert: "Not authorized" unless @post.user == current_user
   end
 
-  # Only allow a list of trusted parameters through.
   def post_params
-    params.permit(:title, :content)
+    params.require(:post).permit(:title, :content)
   end
 end

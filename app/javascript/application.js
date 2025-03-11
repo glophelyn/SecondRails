@@ -3,8 +3,4 @@ import "@hotwired/turbo-rails";
 import "controllers";
 import "bootstrap";
 
-// Import Rails UJS to handle DELETE method in link_to
-import Rails from "@rails/ujs";
-Rails.start();
-//= require rails-ujs
 
