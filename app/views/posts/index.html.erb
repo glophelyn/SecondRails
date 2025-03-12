@@ -87,9 +87,9 @@
 <!-- Posts Section -->
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <% @posts.each do |post| %>
-        <div class="card post-card p-4 mb-4 border-0">
+    <div class="col-md-10">
+      <% @posts.each_with_index do |post, index| %>
+        <div class="card post-card p-4 mb-4 border-0 <%= 'big-post' if index.zero? %>">
           <div class="post-header">
             <div class="profile-pic">
               <%= post.user.email.first.upcase %>
@@ -100,10 +100,11 @@
             </div>
           </div>
           <hr>
-          <p class="post-content mb-3"><%= truncate(post.content, length: 200) %></p>
+          <p class="post-content mb-3"><%= truncate(post.content, length: 300) %></p>
           <%= link_to "Read More", post_path(post), class: "btn btn-sm btn-outline-primary read-more rounded-pill px-3" %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
+
