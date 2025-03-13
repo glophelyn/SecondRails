@@ -18,8 +18,33 @@
             <%= link_to "✏ Edit Post", edit_post_path(@post), class: "btn btn-warning" %>
             <%= link_to "⬅ Back to Posts", root_path, class: "btn btn-secondary" %>
             <%= button_to "🗑 Delete", post_path(@post), method: :delete, data: { confirm: "Are you sure you want to delete this post?" }, class: "btn btn-danger" %>
-
           </div>
+
+          <hr>
+          <h2 class="mt-4">Comments</h2>
+
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <%= form_with(model: [@post, Comment.new], local: true, class: "mb-3") do |form| %>
+                <div class="input-group">
+                  <%= form.text_field :content, class: "form-control", placeholder: "Write a comment..." %>
+                  <button type="submit" class="btn btn-primary">Post Comment</button>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <% @post.comments.each do |comment| %>
+            <div class="card mb-3 shadow-sm">
+              <div class="card-body">
+                <h6 class="card-title text-primary">
+                  <%= comment.user&.name || "Anonymous" %>
+                </h6>
+                <p class="card-text"><%= comment.content %></p>
+                <p class="text-muted" style="font-size: 0.8rem;"><%= time_ago_in_words(comment.created_at) %> ago</p>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

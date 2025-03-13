@@ -10,6 +10,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1
   def show
+    @post = Post.includes(:comments).find(params[:id])
   end
 
   # GET /posts/new
